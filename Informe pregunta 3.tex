@@ -1,0 +1,148 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{anyfontsize} 
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[pdftex]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{listings}
+%\usepackage{t1enc} 
+
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+
+\lstset{language=c}
+
+\title{\textbf{La Cuevita}}
+\author{Nadia González Fernández 
+	\\\emph{Grupo 312}}
+\date{}
+
+\rhead{Universidad de La Habana, MATCOM}
+\lhead{Ingeniería de Software}
+\rfoot{Página \thepage}
+
+\begin{document}
+	\begin{titlepage}
+		\begin{center}
+			\vspace*{1cm}
+			\textbf{Equipo 3}
+			
+			\vspace{0.5cm}
+			Proyecto Final EDA II
+			
+			\vspace{1.5cm}
+			\textbf{Nadia González Fernández \textnormal{Arrastre}
+				\\Bryan Machin Garc\'ia \textnormal{C-212}
+				\\Jose Alejandro Sol\'is Fern\'andez \textnormal{C-212}}
+			
+			\vspace{5cm}
+			Facultad de Matemática y Computación\\
+			Universidad de La Habana
+			
+		\end{center}
+	\end{titlepage}
+
+	\section{Problema 1}
+	Sea una red de flujo $G = <V,E,c>$, con fuente y receptor $s,t \in V$ respectivamente y para toda arista $e \in E$ se cumple que $c(e) = 1$. Se desea eliminar $k$ aristas de la red de flujo de tal forma que el valor del flujo máximo disminuya lo m\'as posible.
+	Dise\~ne un algoritmo que encuentre un conjunto $F$ de $k$ aristas $(|F| = k)$ de 	
+	tal forma que el valor del flujo máximo en la red de flujo $G' = <V,E - F,c>$ es lo m\'as peque\~no posible. La complejidad temporal de su algoritmo debe ser de $O(|E|*k)$. 
+	\section{Problema 2}
+	Sean $n$ ciudades, una de ellas la capital y $m$ carreteras. Cada carretera conecta unidireccionalmente a un par de ciudades. Dise\~ne un algoritmo que devuelva una lista de carreteras a construir tal que luego de construidas sea posible llegar desde la capital al resto de las ciudades El tama\~no de la lista tiene que ser lo menor posible incluso vac\'ia en caso de que inicialmente todas las ciudades sean alcanzables desde la capital. La complejidad temporal del algoritmo debe ser $O(n + m)$.
+	\subsection{Propuesta de Soluci\'on}
+	Para hallar la menor cantidad de carreteras que deben ser construidas para llegar desde la capital al resto de las ciudades, modelemos el ejercicio como un grafo dirigido $G = <V,E>$. Sea $V$ el conjunto de v\'ertices formado por las $n$ ciudades, incluida la capital, y $E$ el conjunto de aristas, que representan las $m$ carreteras, donde la arista $<n_1,n_2> \in E$ si y solo si existe una carretera de la ciudad $n_1$ hasta $n_2$.
+	\\Luego, se hallan todas las componentes fuertemente conexas y se crea un grafo reducido de dichas componentes fuertemente conexas.
+	\\Despu\'es se hace $DFS$-$Visit$ tomando como ra\'iz el v\'ertice que representa a la componente fuertemente conexa a la cual pertenece la capital.
+	\\Cada v\'ertice tiene la  propiedad $in$-$degree$ (cantidad de aristas que inciden sobre \'el).
+	\\Luego, todos los v\'ertices que no forman parte del \'arbol creado por $DFS$-$Visit$, es decir, todos las componentes fuertemente conexas que no son alcanzables desde la componente fuertemente conexa que contiene a la capital. Se analizan los $in$-$degree$ y por cada v\'ertice con $in$-$degree = 0$ se a\~nade la arista formada por el v\'ertice capital, y cualquier v\'ertice de la componente fuertemente conexa donde en el grafo de componentes tiene $in$-$degree=0$.
+	\subsection{Correctitud}
+%	Sean $C_1,C_2,...,C_k$ las componentes fuertemente conexas del grafo $G$. Entonces, para todo v\'ertice $u \in C_i$ y $v \in C_i$, existe un camino de $u$ a $v$ y otro de $v$ a $u$ por estar sobre la misma componente fuertemente conexa. 
+	%Por lo tanto no es necesario a\~nadir ninguna arista dentro de una misma componente fuertemente conexa. Por lo tanto, en la componente que contiene a la capital no es necesario añadir aristas ya que existe al menos un camino que conecta al v\'ertice de la capital y los v\'ertices restantes de la componente.
+	
+	Sea $G^{SCC}=\{ V^{SCC},E^{SCC}\}$ un grafo reducido de G. Cada v\'ertice tiene la propiedad $in$-$degree$. Esta se actualiza en el v\'ertice $w$ cuando se descubre la arista $<v,w>$. Esto no modifica el funcionamiento del algoritmo.
+	\\Sin p\'erdida de generalidad, sea $C_i$ la componente fuertemente conexa que contiene al v\'ertice de la capital. No es necesario añadir aristas dentro de $C_i$ ya que existe un camino del vértice capital al resto de los vértices de la componente. Entonces se debe analizar si existe un camino que conecte un v\'ertice de $C_i$ con cualquier otro v\'ertice de alguna componente $C_j$ tal que $i \neq j$. Para ello, se hace $DFS$-$Visit$ en el grafo reducido $G^{SCC}$, tomando como ra\'iz el v\'ertice de la componente donde se encuentra la capital. Durante la ejecución, se actualiza una lista global que contiene todos los v\'ertices visitados. Para cada vértice $v$ visitado en este recorrido existe un camino desde la raíz (la capital) hasta v. Ningún v\'ertice no visitado en el $DFS$-$Visit$ es alcanzable desde la capital.	  
+	\\ Luego de este analisis, se hallan las aristas que deben ser a\~nadir tal que exista un camino desde la capital a todos los vértices.
+	\\Demostremos que solo es necesario a\~nadir aquellas aristas formadas por el v\'ertice capital y cualquier v\'ertice dentro de una componente fuertemente conexa $C$ representada por v\'ertices no visitados tal que $in$-$degree(C) = 0$.
+	\\\\\emph{\textbf{Lema 1:}} Para cada v\'ertice $v$ de $in$-$degree > 0$ existe un camino que conecta a un v\'ertice $u$ de $in$-$degree$ = 0 a $v$.
+	\\\\\textbf{Demostraci\'on:} Sea $c = v_0, v_1, ..., v_k$ el camino m\'as largo que contiene al v\'ertice $v_k$. Supongamos que $in$-$degree(v_0) > 0$, entonces existe un v\'ertice $w$ que cumple:
+	\begin{itemize}
+		\item $w \notin c \Rightarrow \exists c'$ tal que $c'$ tiene mayor longitud que c. \emph{Contradicci\'on}.
+		\item $w \in c \Rightarrow$ existe un ciclo en c $\Rightarrow$ $v_0$ y $w$ pertenecen a la misma componene fuertemete conexa. \emph{Contradicci\'on}
+	\end{itemize}
+	Por lo tanto, a\~nadiendo las aristas que van desde el v\'ertice que contiene a la capital a los v\'etices que tiene $in$-$degree$ = 0, la capital quedar\'ia conectada con todas las ciudades.
+	\\Demostremos que se han a\~nadido la cantidad m\'inima de aristas necesarias. Sea $<u,v>$ una de las aristas a\~nadidas. Por la forma en que se añadió esta arista, $v$ tiene $in$-$degree = 1$. Al quitarla, $v$ tendr\'ia $in$-$degree = 0$ y por lo antes expuesto queda desconectado de la capital.  
+	\subsection{Pseudoc\'odigo:}   
+	
+	\begin{algorithm}[h] 
+		\caption{Carreteras necesarias}            
+		\begin{algorithmic}[1]
+			\label{MinimumRoads}
+			\State $G \gets BuildGraph<V,E>$     \Comment grafo formado por las $n$ ciudades y $m$ carreteras
+			
+			\State $G' \gets Strongly$-$Connected$-$Components(G)$   
+			
+			\State $G^{SCC} \gets$ ReducedComponentGraph    \Comment grafo reducido
+			
+			\State visited $\gets$ \textbf{DFS-Visit}$(G^{SCC},capital)$
+			
+			\State edges $\gets$ list    
+			
+			\ForEach {$vertex$ in $G^{SCC}$}
+			\If {{\bf not} visited[vertex] {\bf and} vertex.$in$-$degree$ == 0}
+			\State edges.add($<$capital,vertex$>$)
+			\EndIf
+			\EndFor
+			
+			\State {\bf return} edges       
+		\end{algorithmic}
+	\end{algorithm} 
+	\subsection{Análisis de la complejidad temporal}
+	Se construyen los grafos $G$, $G'$ y $G^{SCC}$ utilizando listas de adyacencia, lo cual tiene un costo $O(V+E)$. La complejidad temporal en la construcci\'on del grafo $G^{SCC}$ no se ve afectada por la actualizaci\'on de la propiedad $in$-$degree$, ya que es $O(1)$. La ejecuci\'on del $DFS$-$Visit$ es $O(V+E)$ porque se utiliza un grafo implementado en una lista de adyacencia. En las l\'ineas $6-9$ se recorre a lo sumo una vez cada v\'ertice del grafo. Por lo tanto, el ciclo es $O(V)$. Luego, por regla de la suma, la complejidad temporal del algoritmo es $O(V+E)$.
+	\section{Problema 3}
+	Sea $G = <V,E>$ un grafo dirigido y ponderado, $s \in V (G)$, $t \in V (G)$, $P = {<e_i,w_i>}$ donde $e_i \in E(G)$ , $w_i  \in N$, y $0 \leq k \leq |P|$. Se desea calcular el camino de costo mínimo de $s$ a $t$ en $G$ pudiendo cambiar a lo sumo $k$ aristas del grafo $G$ por aristas del conjunto $P$. La complejidad temporal de su algoritmo debe ser $O(k|E|log|V |)$.
+	
+	\subsection{Propuesta de Soluci\'on}
+	Sean $G_1,G_2,…,G_{(k+1)}$ grafos idénticos a G. Sea $G'$ el grafo formado por la unión de los anteriores. Cada arco de $P$ será colocado entre todo par consecutivo de estos grafos, de manera que, si el arco $<a,b> \in P$ entonces $<a_i,b_{(i+1)}> \in G$, para todo $1 \leq i \leq k$. Luego se calculan las distancias de los caminos de costo mínimo de $s_1$ hacia $t_i$  para todo $1 \leq i \leq k$ y, la menor de estas, es la respuesta al problema.
+	\subsection{Correctitud}
+	Sea $x_i$ el vértice $x \in V(G)$ en el $i$-ésimo de los grafos iguales. Un camino que vaya desde el vértice $s_1$ hacia el vértice $t_i$ , pasa exactamente por $i$ arcos de $P$ debido a que no existen arcos que vayan desde el grafo $G_{(i+1)}$ hacia el grafo $G_i$. 
+	\\Sea $j$ el índice para el cual el costo del camino de costo mínimo de $s_1$ a $t_i$, para todo $1\leq k \leq 1$, sea mínimo. 
+	\\Dicho camino $p$, que va desde $s_1$  a $t_j$, no puede contener un par de vértices iguales pero que pertenezcan a un $G_i$ distinto. O sea, $v_i$ y $v_{(i+k)}$ no pertenecen a $p$ simultáneamente para ningún $v \in G$, pues al saber que en cada $G_i$ contamos con las mismas aristas, podemos asegurar que tomando el mismo recorrido que se tomó para llegar de $v_{(i+k)}$ a $t_j$, se puede llegar a un $t_k$ a partir de $v_i$. Pero como todas las aristas tienen costo positivo, el costo del camino de $s_1$ a $t_k$ es menor que el costo de $p$ lo cual es imposible.
+	\\Luego, en este camino $p$ tampoco existirán aristas que conecten a vértices iguales, pero de distintos grafos $G_i$, por lo que si a dicho camino pertenece una arista del conjunto $P$, no pertenecerá su arista homóloga del grafo original.
+	\\Por tanto, al hallar el camino de costo mínimo que va desde $s_1$ hacia uno de los $t_i$ se sabe que a lo sumo se utilizan $k$ aristas del conjunto $P$ y que de utilizarse estas, es porque fueron intercambiadas por las originales.
+	\\Por último, como se calculan los caminos de costo mínimo desde $s_1$ hacia todos los $t_i$, se garantiza que todas las $j-$combinaciones de aristas a intercambiar, para todo $j \leq k$, fueron comparadas por lo que esta solución es correcta.
+	\subsection{Pseudoc\'odigo}
+\begin{algorithm}[h] 
+	\begin{algorithmic}[1]
+		\State $n \gets |V|$
+		\State $G' \gets$ vac\'io de tama\~no $n(k+1)$		\Comment {Construcci\'on del grafo}
+		\For $i = 0$ to $k$ \bf{do}
+			\For $u, v \in E(G)$ \bf{do}
+				\State $G'[i*n+u]$.append$(i*n+v)$
+			\EndFor
+		\EndFor				\Comment \textnormal {Dijkstra}
+		\State $d \gets$ \emph{Dijkstra}$(G', s)$	\Comment \textnormal{Encontrar la respuesta}
+		\State \bf{return} min$_{0\leq i \leq k}d[i*n+t]$
+		
+	\end{algorithmic}
+\end{algorithm}
+	\subsection{Análisis de la complejidad temporal}
+	Construir $G'$ es $O(|V'| + |E'|)$. Aplicar Dijkstra es $O(|E' |log|V'|)$.
+	\\Ya que cada vértice del grafo original se repite en cada uno de los $(k+1)$ grafos idénticos sabemos que  $|V'| = (k + 1)|V|$.
+	\\Por cada uno de estos $(k+1)$ grafos idénticos se repiten también las aristas del grafo original y, además entre todo par de grafos consecutivos se encuentran las aristas de $P$ que los enlaza por lo que $|E'|= (k + 1)|E|+ k|P|$. Como sabemos que $|P| \leq |E|$ entonces $|E"| \leq (2k+1)|E|$
+	\\Luego construir $G'$ es $O((k+1)|V|+(2k+1)|E|)  =  O(k(|V|+|E|))$ y aplicar Dijkstra es	$O((2k + 1)|E|log(k + 1)|V|) = O(k|E|log|V|)$.
+	\\Por la regla de la suma la complejidad temporal del algoritmo es $O(k|E|log|V|)$.
+	
+	
+	\section{Problema 4}
+	Sea $<T = V>$ un árbol, con ra\'z $r \in V$ , que se comporta como un circuito lógico. Cada hoja (excluyendo la ra\'iz) representa una entrada del circuito y el resto de los vértices son elementos lógicos, incluyendo la ra\'iz que es la única salida del circuito. Las entradas reciben un bit de información y la salida retorna un bit. Hay
+	4 tipos de elementos lógicos \emph{AND} (2 entradas), emph{OR} (2 entradas), emph{XOR} (2 entradas) y emph{NOT} (1 entrada). Los elementos lógicos toman los valores de sus descendientes directos (las entradas) y devuelven el resultado de su operación. Se conoce la estructura de $T$ , el tipo de elemento lógico en sus vértices, la configuración inicial de los bits en las entradas y que hay exactamente una entrada rota. Para arreglar dicha entrada hay que cambiar el valor en ella. Como se desconoce la ubicación de la entrada rota se requiere saber para cada entrada $I$ cu\'al	ser\'ia la salida si cambiara el valor de $I$. Diseñe un algoritmo que resuelva esta problemática con complejidad temporal $O(|V |)$.
+\end{document}
