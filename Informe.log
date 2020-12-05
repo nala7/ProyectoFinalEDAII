@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.12.3)  5 DEC 2020 17:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.12.3)  5 DEC 2020 18:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1223,103 +1223,103 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language append on input line 246.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language append on input line 279.
+(babel)             in language append on input line 278.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language append on input line 279.
+(babel)             in language append on input line 278.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language append on input line 279.
+(babel)             in language append on input line 278.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language append on input line 279.
+(babel)             in language append on input line 278.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language append on input line 279.
+(babel)             in language append on input line 278.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language append on input line 279.
+(babel)             in language append on input line 278.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language append on input line 279.
+(babel)             in language append on input line 278.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language append on input line 279.
+(babel)             in language append on input line 278.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language append on input line 279.
+(babel)             in language append on input line 278.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language append on input line 279.
+(babel)             in language append on input line 278.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language append on input line 279.
+(babel)             in language append on input line 278.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language append on input line 279.
+(babel)             in language append on input line 278.
  [8]
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language append on input line 281.
+(babel)             in language append on input line 296.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language append on input line 281.
+(babel)             in language append on input line 296.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language append on input line 281.
+(babel)             in language append on input line 296.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language append on input line 281.
+(babel)             in language append on input line 296.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language append on input line 281.
+(babel)             in language append on input line 296.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language append on input line 281.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 283.
+(babel)             in language append on input line 296.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 298.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language append on input line 283.
+(babel)             in language append on input line 298.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language append on input line 283.
+(babel)             in language append on input line 298.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language append on input line 283.
+(babel)             in language append on input line 298.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language append on input line 283.
+(babel)             in language append on input line 298.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language append on input line 283.
+(babel)             in language append on input line 298.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language append on input line 283.
+(babel)             in language append on input line 298.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language append on input line 283.
+(babel)             in language append on input line 298.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language append on input line 283.
+(babel)             in language append on input line 298.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language append on input line 283.
+(babel)             in language append on input line 298.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language append on input line 283.
+(babel)             in language append on input line 298.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language append on input line 283.
+(babel)             in language append on input line 298.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language append on input line 283.
+(babel)             in language append on input line 298.
  [9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 283.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 298.
  (./Informe.aux
 LaTeX Info: Redefining \. on input line 23.
 LaTeX Info: Redefining \% on input line 23.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 283.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 283.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 298.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 298.
 Package rerunfilecheck Info: File `Informe.out' has not changed.
 (rerunfilecheck)             Checksum: 2480F782297C67D6192623BF121232A3;1328.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 283.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 298.
  ) 
 Here is how much of TeX's memory you used:
- 9558 strings out of 494788
- 134569 string characters out of 6177222
+ 9559 strings out of 494788
+ 134589 string characters out of 6177222
  256521 words of memory out of 5000000
- 12732 multiletter control sequences out of 15000+600000
- 8789 words of font info for 33 fonts, out of 8000000 for 9000
+ 12733 multiletter control sequences out of 15000+600000
+ 8480 words of font info for 32 fonts, out of 8000000 for 9000
  85 hyphenation exceptions out of 8191
  28i,8n,49p,863b,457s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-msy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Informe.pdf (10 pages, 181850 bytes).
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.
+pfb>
+Output written on Informe.pdf (10 pages, 171585 bytes).
 PDF statistics:
- 194 PDF objects out of 1000 (max. 8388607)
- 167 compressed objects within 2 object streams
- 34 named destinations out of 1000 (max. 500000)
+ 191 PDF objects out of 1000 (max. 8388607)
+ 165 compressed objects within 2 object streams
+ 35 named destinations out of 1000 (max. 500000)
  161 words of extra memory for PDF output out of 10000 (max. 10000000)
 

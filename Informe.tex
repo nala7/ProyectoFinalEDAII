@@ -171,7 +171,7 @@
 		\end{algorithmic}
 	\end{algorithm} 
 	\subsection{Análisis de la complejidad temporal}
-	Se construyen los grafos $G$, $G'$ y $G^{SCC}$ utilizando listas de adyacencia, lo cual tiene un costo $O(V+E)$. La complejidad temporal en la construcci\'on del grafo $G^{SCC}$ no se ve afectada por la actualizaci\'on de la propiedad $in$-$degree$, ya que es $O(1)$. La ejecuci\'on del $DFS$-$Visit$ es $O(V+E)$ por la manera en que est\'a implementado el grafo. En las l\'ineas $6-9$ se recorre a lo sumo una vez cada v\'ertice del grafo. Por lo tanto, el ciclo es $O(V)$. Luego, por regla de la suma, la complejidad temporal del algoritmo es $O(V+E)$.
+	Se construyen los grafos $G$, $G'$ y $G^{SCC}$ utilizando listas de adyacencia, lo cual tiene un costo $O(|V| + |E|)$. La complejidad temporal en la construcci\'on del grafo $G^{SCC}$ no se ve afectada por la actualizaci\'on de la propiedad $in$-$degree$, ya que es $O(1)$. La ejecuci\'on del $DFS$-$Visit$ es $O(|V| + |E|)$ por la manera en que est\'a implementado el grafo. En las l\'ineas $6-9$ se recorre a lo sumo una vez cada v\'ertice del grafo. Por lo tanto, el ciclo es $O(|V|)$. Luego, por regla de la suma, la complejidad temporal del algoritmo es $O(|V| + |E|)$.
 	\section{Problema 3}
 	Sea $G = <V,E>$ un grafo dirigido y ponderado, $s \in V (G)$, $t \in V (G)$, $P = {<e_i,w_i>}$ donde $e_i \in E(G)$ , $w_i  \in N$, y $0 \leq k \leq |P|$. Se desea calcular el camino de costo mínimo de $s$ a $t$ en $G$ pudiendo cambiar a lo sumo $k$ aristas del grafo $G$ por aristas del conjunto $P$. La complejidad temporal de su algoritmo debe ser $O(k|E|log|V |)$.
 	
@@ -245,6 +245,23 @@
 	
 	\subsection{Pseudoc\'odigo}
 	\begin{algorithm}[H] 
+	\caption{Solution}
+		\begin{algorithmic}[1]
+			\State G.output = DFS-Visit-OutPut(G, u)
+			\State G.root.changes-root = \textbf{True}
+			\State G = DFS-Visit-Set-Prop(G, v, \textbf{True})
+			\State result $\gets$ list
+			\ForEach {leave \textbf{in} $G$}
+				\If {leave.changes-root}
+				\State {result.append(\textbf{not} G.output)}
+				\Else { result.append(G.output)}
+				\EndIf 
+			\EndFor
+			\State \textbf{return} result
+		\end{algorithmic}
+	\end{algorithm}
+	
+	\begin{algorithm}[H] 
 		\caption{DFS-Visit-OutPut(G, u)}
 		\begin{algorithmic}[1]
 			\ForEach{$ u \in Adj[u]$}:
@@ -254,7 +271,7 @@
 			\EndIf
 			\EndFor
 			
-			\State \bf{return}
+			\State \textbf{return} G.root.output
 			
 		\end{algorithmic}
 	\end{algorithm}
@@ -262,22 +279,20 @@
 	\begin{algorithm}[H] 
 		\caption{DFS-Visit-Set-Prop(G, v, i-change-parent)}
 		\begin{algorithmic}[1]
-			\If {i-change-parent \bf{and} \textnormal{v.parent.changes-root}}
+			\If {\textbf{not} root \textbf{and} i-change-parent \textbf{and} \textnormal{v.parent.changes-root}}
 				\State \textnormal{v.changes-root = \bf{True}}
 			\EndIf	
 			\ForEach{$ u \in Adj[v]$}:
-			\If{$u$ not visited}		
-			\State \textnormal{child-changes-me = v.Child-Changes-Me(u)}
-			\State \textnormal{DFS-Visit-Set-Prop(G, u, child-changes-me)}
-			\EndIf
-			\EndFor
-			
-			\State \bf{return} 
+				\If{$u$ not visited}		
+				\State {child-changes-me = v.Child-Changes-Me(u)}
+				\State {DFS-Visit-Set-Prop(G, u, child-changes-me)}
+				\EndIf
+				\EndFor
+			\State \textbf{return} result
 			
 		\end{algorithmic}
 	\end{algorithm}
-	En el caso de la ra\'iz la propiedad \emph{changes-root} debe ser igualada a \emph{True} antes de llamar al m\'etodo \emph{DFS-Visit-Set-Prop}
 
 	\subsection{Análisis de la complejidad temporal}
-	La soluci\'on ejecuta dos DFS, los cuales tienen una complejidad temporal de $O(V + E)$. Sin embargo, en este caso se hace DFS sobre un \'arbol y todo \'arbol cumple que tiene exactamente $V - 1$ aristas, siendo $V$ la cantidad de v\'ertices en el \'arbol. Por lo tanto la complejidad temporal ser\'ia $O(V + (V - 1)) = O(2*V - 1) = O(V)$
+	La soluci\'on ejecuta dos DFS, los cuales tienen una complejidad temporal de $O(|V| + |E|)$ (solo a\~naden una propiedad cada uno, lo cual tiene una complejidad de O(1) y no afecta la correctitud o la complejidad del algoritmo). Sin embargo, en este caso se hace DFS sobre un \'arbol y todo \'arbol cumple que tiene exactamente $V - 1$ aristas, siendo $V$ la cantidad de v\'ertices en el \'arbol. Por lo tanto la complejidad temporal ser\'ia $O(|V| + (|V| - 1)) = O(2*|V| - 1) = O(|V|)$
 \end{document}
