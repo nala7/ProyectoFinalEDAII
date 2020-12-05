@@ -42,8 +42,8 @@
 			
 			\vspace{1.5cm}
 			\textbf{Nadia González Fernández \textnormal{Arrastre}
-				\\Bryan Machin Garc\'ia \textnormal{C-212}
-				\\Jose Alejandro Sol\'is Fern\'andez \textnormal{C-212}}
+				\\Bryan Machín Garc\'ia \textnormal{C-212}
+				\\José Alejandro Sol\'is Fern\'andez \textnormal{C-212}}
 			
 			\vspace{5cm}
 			Facultad de Matemática y Computación\\
@@ -68,31 +68,31 @@
 %	Sean $C_1,C_2,...,C_k$ las componentes fuertemente conexas del grafo $G$. Entonces, para todo v\'ertice $u \in C_i$ y $v \in C_i$, existe un camino de $u$ a $v$ y otro de $v$ a $u$ por estar sobre la misma componente fuertemente conexa. 
 	%Por lo tanto no es necesario a\~nadir ninguna arista dentro de una misma componente fuertemente conexa. Por lo tanto, en la componente que contiene a la capital no es necesario añadir aristas ya que existe al menos un camino que conecta al v\'ertice de la capital y los v\'ertices restantes de la componente.
 	
-	Sea $G^{SCC}=\{ V^{SCC},E^{SCC}\}$ un grafo reducido de G. Cada v\'ertice tiene la propiedad $in$-$degree$. Esta se actualiza en el v\'ertice $w$ cuando se descubre la arista $<v,w>$. Esto no modifica el funcionamiento del algoritmo.
+	Sea $G^{SCC}=\{ V^{SCC},E^{SCC}\}$ el grafo reducido de G. Cada v\'ertice tiene la propiedad $in$-$degree$. Esta se actualiza en el v\'ertice $w$ cuando se descubre la arista $<v,w>$. Esto no modifica el funcionamiento del algoritmo.
 	\\Sin p\'erdida de generalidad, sea $C_i$ la componente fuertemente conexa que contiene al v\'ertice de la capital. No es necesario añadir aristas dentro de $C_i$ ya que existe un camino del vértice capital al resto de los vértices de la componente. Entonces se debe analizar si existe un camino que conecte un v\'ertice de $C_i$ con cualquier otro v\'ertice de alguna componente $C_j$ tal que $i \neq j$. Para ello, se hace $DFS$-$Visit$ en el grafo reducido $G^{SCC}$, tomando como ra\'iz el v\'ertice de la componente donde se encuentra la capital. Durante la ejecución, se actualiza una lista global que contiene todos los v\'ertices visitados. Para cada vértice $v$ visitado en este recorrido existe un camino desde la raíz (la capital) hasta v. Ningún v\'ertice no visitado en el $DFS$-$Visit$ es alcanzable desde la capital.	  
-	\\ Luego de este analisis, se hallan las aristas que deben ser a\~nadir tal que exista un camino desde la capital a todos los vértices.
+	\\ Luego de este análisis, se hallan las aristas que deben ser a\~nadidas tal que exista un camino desde la capital a todos los vértices.
 	\\Demostremos que solo es necesario a\~nadir aquellas aristas formadas por el v\'ertice capital y cualquier v\'ertice dentro de una componente fuertemente conexa $C$ representada por v\'ertices no visitados tal que $in$-$degree(C) = 0$.
 	\\\\\emph{\textbf{Lema 1:}} Para cada v\'ertice $v$ de $in$-$degree > 0$ existe un camino que conecta a un v\'ertice $u$ de $in$-$degree$ = 0 a $v$.
-	\\\\\textbf{Demostraci\'on:} Sea $c = v_0, v_1, ..., v_k$ el camino m\'as largo que contiene al v\'ertice $v_k$. Supongamos que $in$-$degree(v_0) > 0$, entonces existe un v\'ertice $w$ que cumple:
+	\\\\\textbf{Demostraci\'on:} Sea $C = v_0, v_1, ..., v_k$ el camino m\'as largo que contiene al v\'ertice $v_k$. Supongamos que $in$-$degree(v_0) > 0$, entonces existe $<w, v_0>$ tal que el v\'ertice $w$ cumple que:
 	\begin{itemize}
-		\item $w \notin c \Rightarrow \exists c'$ tal que $c'$ tiene mayor longitud que c. \emph{Contradicci\'on}.
-		\item $w \in c \Rightarrow$ existe un ciclo en c $\Rightarrow$ $v_0$ y $w$ pertenecen a la misma componene fuertemete conexa. \emph{Contradicci\'on}
+		\item $w \notin c \Rightarrow \exists C'$ tal que $C'$ tiene mayor longitud que $C$ y contiene a $v_k$. \emph{Contradicci\'on}.
+		\item $w \in C \Rightarrow$ existe un ciclo en C, ya que existe un camino de $v_0$ a $w$ y la arista $<w,v_0>$ completa el ciclo. \emph{Contradicci\'on} porque en un grafo reducido no existen ciclos.
 	\end{itemize}
-	Por lo tanto, a\~nadiendo las aristas que van desde el v\'ertice que contiene a la capital a los v\'etices que tiene $in$-$degree$ = 0, la capital quedar\'ia conectada con todas las ciudades.
+	Por lo tanto, a\~nadiendo las aristas que van desde el v\'ertice que contiene a la capital a los v\'etices que tiene $in$-$degree$ = 0, la capital quedar\'ia conectada con todas las ciudades. 
 	\\Demostremos que se han a\~nadido la cantidad m\'inima de aristas necesarias. Sea $<u,v>$ una de las aristas a\~nadidas. Por la forma en que se añadió esta arista, $v$ tiene $in$-$degree = 1$. Al quitarla, $v$ tendr\'ia $in$-$degree = 0$ y por lo antes expuesto queda desconectado de la capital.  
 	\subsection{Pseudoc\'odigo:}   
 	
-	\begin{algorithm}[h] 
+	\begin{algorithm}[H] 
 		\caption{Carreteras necesarias}            
 		\begin{algorithmic}[1]
 			\label{MinimumRoads}
-			\State $G \gets BuildGraph<V,E>$     \Comment grafo formado por las $n$ ciudades y $m$ carreteras
+			\State $G \gets$ BuildGraph$<V,E>$
 			
-			\State $G' \gets Strongly$-$Connected$-$Components(G)$   
+			\State $G' \gets $Strongly-Connected-Components($G$)   
 			
-			\State $G^{SCC} \gets$ ReducedComponentGraph    \Comment grafo reducido
+			\State $G^{SCC} \gets$ ReducedComponentGraph($G'$)    \Comment grafo reducido
 			
-			\State visited $\gets$ \textbf{DFS-Visit}$(G^{SCC},capital)$
+			\State visited $\gets$ DFS-Visit$(G^{SCC},capital)$
 			
 			\State edges $\gets$ list    
 			
@@ -106,43 +106,113 @@
 		\end{algorithmic}
 	\end{algorithm} 
 	\subsection{Análisis de la complejidad temporal}
-	Se construyen los grafos $G$, $G'$ y $G^{SCC}$ utilizando listas de adyacencia, lo cual tiene un costo $O(V+E)$. La complejidad temporal en la construcci\'on del grafo $G^{SCC}$ no se ve afectada por la actualizaci\'on de la propiedad $in$-$degree$, ya que es $O(1)$. La ejecuci\'on del $DFS$-$Visit$ es $O(V+E)$ porque se utiliza un grafo implementado en una lista de adyacencia. En las l\'ineas $6-9$ se recorre a lo sumo una vez cada v\'ertice del grafo. Por lo tanto, el ciclo es $O(V)$. Luego, por regla de la suma, la complejidad temporal del algoritmo es $O(V+E)$.
+	Se construyen los grafos $G$, $G'$ y $G^{SCC}$ utilizando listas de adyacencia, lo cual tiene un costo $O(V+E)$. La complejidad temporal en la construcci\'on del grafo $G^{SCC}$ no se ve afectada por la actualizaci\'on de la propiedad $in$-$degree$, ya que es $O(1)$. La ejecuci\'on del $DFS$-$Visit$ es $O(V+E)$ por la manera en que est\'a implementado el grafo. En las l\'ineas $6-9$ se recorre a lo sumo una vez cada v\'ertice del grafo. Por lo tanto, el ciclo es $O(V)$. Luego, por regla de la suma, la complejidad temporal del algoritmo es $O(V+E)$.
 	\section{Problema 3}
 	Sea $G = <V,E>$ un grafo dirigido y ponderado, $s \in V (G)$, $t \in V (G)$, $P = {<e_i,w_i>}$ donde $e_i \in E(G)$ , $w_i  \in N$, y $0 \leq k \leq |P|$. Se desea calcular el camino de costo mínimo de $s$ a $t$ en $G$ pudiendo cambiar a lo sumo $k$ aristas del grafo $G$ por aristas del conjunto $P$. La complejidad temporal de su algoritmo debe ser $O(k|E|log|V |)$.
 	
 	\subsection{Propuesta de Soluci\'on}
-	Sean $G_1,G_2,…,G_{(k+1)}$ grafos idénticos a G. Sea $G'$ el grafo formado por la unión de los anteriores. Cada arco de $P$ será colocado entre todo par consecutivo de estos grafos, de manera que, si el arco $<a,b> \in P$ entonces $<a_i,b_{(i+1)}> \in G$, para todo $1 \leq i \leq k$. Luego se calculan las distancias de los caminos de costo mínimo de $s_1$ hacia $t_i$  para todo $1 \leq i \leq k$ y, la menor de estas, es la respuesta al problema.
+	Sean $G_1,G_2,…,G_{(k+1)}$ grafos idénticos a G tal que  $x = x_i$ donde $x \in G$ y $x_i \in G_i$ y $G'$  el grafo formado por la unión de los anteriores. Cada arco de $P$ será colocado entre todo par consecutivo de estos grafos, de manera que, si el arco $<a,b> \in P$ entonces $<a_i,b_{(i+1)}> \in G'$, para todo $1 \leq i \leq k$. Luego se calculan las distancias de los caminos de costo mínimo de $s_1$ hacia $t_i$  para todo $1 \leq i \leq k + 1$ y, el menor de estos caminos, es la respuesta al problema.
 	\subsection{Correctitud}
-	Sea $x_i$ el vértice $x \in V(G)$ en el $i$-ésimo de los grafos iguales. Un camino que vaya desde el vértice $s_1$ hacia el vértice $t_i$ , pasa exactamente por $i$ arcos de $P$ debido a que no existen arcos que vayan desde el grafo $G_{(i+1)}$ hacia el grafo $G_i$. 
-	\\Sea $j$ el índice para el cual el costo del camino de costo mínimo de $s_1$ a $t_i$, para todo $1\leq k \leq 1$, sea mínimo. 
-	\\Dicho camino $p$, que va desde $s_1$  a $t_j$, no puede contener un par de vértices iguales pero que pertenezcan a un $G_i$ distinto. O sea, $v_i$ y $v_{(i+k)}$ no pertenecen a $p$ simultáneamente para ningún $v \in G$, pues al saber que en cada $G_i$ contamos con las mismas aristas, podemos asegurar que tomando el mismo recorrido que se tomó para llegar de $v_{(i+k)}$ a $t_j$, se puede llegar a un $t_k$ a partir de $v_i$. Pero como todas las aristas tienen costo positivo, el costo del camino de $s_1$ a $t_k$ es menor que el costo de $p$ lo cual es imposible.
-	\\Luego, en este camino $p$ tampoco existirán aristas que conecten a vértices iguales, pero de distintos grafos $G_i$, por lo que si a dicho camino pertenece una arista del conjunto $P$, no pertenecerá su arista homóloga del grafo original.
-	\\Por tanto, al hallar el camino de costo mínimo que va desde $s_1$ hacia uno de los $t_i$ se sabe que a lo sumo se utilizan $k$ aristas del conjunto $P$ y que de utilizarse estas, es porque fueron intercambiadas por las originales.
-	\\Por último, como se calculan los caminos de costo mínimo desde $s_1$ hacia todos los $t_i$, se garantiza que todas las $j-$combinaciones de aristas a intercambiar, para todo $j \leq k$, fueron comparadas por lo que esta solución es correcta.
+	Un camino que vaya desde el vértice $s_1$ hacia el vértice $t_i$ , pasa exactamente por $i$ arcos de $P$ debido a que no existen arcos que vayan desde el grafo $G_{(i+1)}$ hacia el grafo $G_i$. 
+	\\Sea $j$ el índice del camino de costo mínimo de $s_1$ a $t_i$, para todo $1\leq i \leq k + 1$.
+	\\Sea $P$ dicho camino, que va desde $s_1$  a $t_j$, no puede contener un par de vértices $v_i, v_{i+m}$. Supongamos que $P = s_1, ... , v_i, ... , v_{i+m}, w, ... , t_j$ donde $1 \leq i + m \leq j$, entonces el camino podr\'ia ser reducido a $P' = s_1, ... , v_i, w, ... , t_l$ donde $i \leq l \leq j$. La arista $<v_i, w> \in G'$ por la forma en que se construy\'o el grafo y el costo de $P' \leq P$, ya que todas las aristas tienen peso no negativo.
+	\\Por lo tanto, al aplicar Dijkstra se contruye el camino de costo m\'inimo desde $s$ hasta $t$ tomando a lo sumo $k$ aristas de $P$. 
 	\subsection{Pseudoc\'odigo}
-\begin{algorithm}[h] 
+\begin{algorithm}[H] 
 	\begin{algorithmic}[1]
 		\State $n \gets |V|$
 		\State $G' \gets$ vac\'io de tama\~no $n(k+1)$		\Comment {Construcci\'on del grafo}
-		\For $i = 0$ to $k$ \bf{do}
-			\For $u, v \in E(G)$ \bf{do}
-				\State $G'[i*n+u]$.append$(i*n+v)$
+		\For {$i = 0$ to $k$}
+			\For {$u, v \in E(G)$}
+				\State \textnormal{$G'[i*n+u]$.append$(i*n+v)$}
 			\EndFor
-		\EndFor				\Comment \textnormal {Dijkstra}
-		\State $d \gets$ \emph{Dijkstra}$(G', s)$	\Comment \textnormal{Encontrar la respuesta}
-		\State \bf{return} min$_{0\leq i \leq k}d[i*n+t]$
+		\EndFor
+		\For {$<u, v>$ in P}:
+			\For {$i$ to $k$}:				
+				\State $G'$\textnormal{.append($<u_i, v_{i+1}>$)}
+			\EndFor
+		\EndFor
+		\State $d \gets$ \textnormal{\emph{Dijkstra}$(G', s)$}	\Comment \textnormal{Encontrar la respuesta}
+		\State \bf{return} \textnormal{min$_{0\leq i \leq k}d[i*n+t]$}
 		
 	\end{algorithmic}
 \end{algorithm}
 	\subsection{Análisis de la complejidad temporal}
 	Construir $G'$ es $O(|V'| + |E'|)$. Aplicar Dijkstra es $O(|E' |log|V'|)$.
-	\\Ya que cada vértice del grafo original se repite en cada uno de los $(k+1)$ grafos idénticos sabemos que  $|V'| = (k + 1)|V|$.
-	\\Por cada uno de estos $(k+1)$ grafos idénticos se repiten también las aristas del grafo original y, además entre todo par de grafos consecutivos se encuentran las aristas de $P$ que los enlaza por lo que $|E'|= (k + 1)|E|+ k|P|$. Como sabemos que $|P| \leq |E|$ entonces $|E"| \leq (2k+1)|E|$
+	\\Cada vértice del grafo original se repite en cada uno de los $(k+1)$ grafos de $G'$, por lo tanto  $|V'| = (k + 1)|V|$. Por cada uno de estos $(k+1)$ grafos se repiten también las aristas del grafo $G$. Además, entre todo par de grafos consecutivos se encuentran las aristas de $P$ que los enlaza por lo que $|E'|= (k + 1)|E|+ k|P|$. Como  $|P| \leq |E|$, entonces $|E'| \leq (2k+1)|E|$
 	\\Luego construir $G'$ es $O((k+1)|V|+(2k+1)|E|)  =  O(k(|V|+|E|))$ y aplicar Dijkstra es	$O((2k + 1)|E|log(k + 1)|V|) = O(k|E|log|V|)$.
 	\\Por la regla de la suma la complejidad temporal del algoritmo es $O(k|E|log|V|)$.
 	
 	
-	\section{Problema 4}
+		\section{Problema 4}
 	Sea $<T = V>$ un árbol, con ra\'z $r \in V$ , que se comporta como un circuito lógico. Cada hoja (excluyendo la ra\'iz) representa una entrada del circuito y el resto de los vértices son elementos lógicos, incluyendo la ra\'iz que es la única salida del circuito. Las entradas reciben un bit de información y la salida retorna un bit. Hay
-	4 tipos de elementos lógicos \emph{AND} (2 entradas), emph{OR} (2 entradas), emph{XOR} (2 entradas) y emph{NOT} (1 entrada). Los elementos lógicos toman los valores de sus descendientes directos (las entradas) y devuelven el resultado de su operación. Se conoce la estructura de $T$ , el tipo de elemento lógico en sus vértices, la configuración inicial de los bits en las entradas y que hay exactamente una entrada rota. Para arreglar dicha entrada hay que cambiar el valor en ella. Como se desconoce la ubicación de la entrada rota se requiere saber para cada entrada $I$ cu\'al	ser\'ia la salida si cambiara el valor de $I$. Diseñe un algoritmo que resuelva esta problemática con complejidad temporal $O(|V |)$.
+	4 tipos de elementos lógicos \emph{AND} (2 entradas), \emph{OR} (2 entradas), \emph{XOR} (2 entradas) y \emph{NOT} (1 entrada). Los elementos lógicos toman los valores de sus descendientes directos (las entradas) y devuelven el resultado de su operación. Se conoce la estructura de $T$ , el tipo de elemento lógico en sus vértices, la configuración inicial de los bits en las entradas y que hay exactamente una entrada rota. Para arreglar dicha entrada hay que cambiar el valor en ella. Como se desconoce la ubicación de la entrada rota se requiere saber para cada entrada $I$ cu\'al	ser\'ia la salida si cambiara el valor de $I$. Diseñe un algoritmo que resuelva esta problemática con complejidad temporal $O(|V |)$.
+	
+	\subsection{Propuesta de Soluci\'on}
+	Para hallar la soluci\'on se realizaran dos DFS, un primero para hallar la salida del circuito para las entradas dadas y un segundo en el cual se hallar\'a, para cada nodo del \'arbol, las siguientes propiedades booleanas:
+	\begin{itemize}
+		\item yo cambio a mi padre
+		\item mi padre cambia a la ra\'iz
+	\end{itemize}
+	Teniendo estas propiedades se tiene informaci\'on suficiente para saber por cada entrada, si esta estuviera rota, si esta cambia la salida.
+	
+	\subsection{Correctitud}
+	Este problema puede ser modelado por un \'arbol donde las hojas son las entradas y el resto de los v\'ertices son los elementos l\'ogicos. Adem\'as la ra\'iz contiene la salida del circuito. Esta modelaci\'on crea un \'arbol binario ya que todo nodo tiene a lo sumo dos hijos, en el circuito no existen ciclos y todos elementos se conectan.
+	\\En un primer recorrido de DFS se calcula la salida del circuito. Para ello se hallan las salidas de cada nodo a partir de los valores iniciales dados. 
+	\\Esto se realiza cuando un nodo $v$ va a pasar a ser negro y ya todos sus descendientes son negros, es decir, ya est\'an calculados. En ese momento $v$ le puede preguntar a sus hijo sus valores y seg\'un la operaci\'on l\'ogica que tenga el nodo, saber su salida. En el caso de las hojas, estas ya saben su valor porque son las entradas.
+	\\\\\textbf{Demostraci\'on por Inducci\'on:} 
+	\begin{itemize}
+		\item \textbf{Caso base:} Las hojas son las entradas, por lo tanto conocen su valor, es decir, est\'an bien calculadas
+		\item \textbf{Hip\'otesis:} Todo nodo en el $n-$\'esimo nivel o superior est\'a bien calculado
+		\item \textbf{Tesis:} Si el $n-$\'esimo nivel est\'a bien calculado, entonces el $n-1$ nivel se calular\'a bien
+	\end{itemize}
+	$\bf{n \Rightarrow n - 1}$
+	\\Un nodo $v$ en el nivel $n - 1$ conoce su operaci\'on y el valor de sus hijos del nivel $n + 1$, por lo tanto est\'an bien calculados. Entonces $v$ puede ser calculado y el resultado es correcto.
+	\\\\Un segundo recorrido por el \'arbol con un DFS calcula el valor de las propiedades \emph{yo-cambio-a-mi-padre} y \emph{yo-cambio-la-ra\'iz}. Esto se har\'a en el momento en el que un nodo $v$ sea descubierto.
+	\\Sea $w$ el padre de $v$. En el momento que $v$ sea descubierto, ya $w$ sabe si, cuando \'el cambia de valor, cambia la salida de la ra\'iz (es decir, la salida del circuito). Tambi\'en $w$ sabr\'a si cuando la salida de su hijo $v$ cambia, si su salida var\'ia. (Se considera que el nodo ra\'iz siempre cambia la salida del circuito). Cuando el DFS llegue a las hojas, ya estas sabr\'an si cambian la ra\'iz de modificar ellas sus valores. Es decir, se sabr\'a para cada hoja $i$, si esta est\'a rota, el resultado del circuito.
+	\\\\\textbf{Demostraci\'on por Inducci\'on Fuerte:} 
+	\begin{itemize}
+		\item \textbf{Caso base:} La ra\'iz cambia el valor de salida. Adem\'as sus hijos ya est\'an calculados por lo tanto sabe para cada hijo, si este cambia, si la salida  de la ra\'iz cambia.
+		\item \textbf{Hip\'otesis:} Cuando el $n-$\'esimo nodo es descubierto se calculan bien sus propiedades
+		\item \textbf{Tesis:} Cuando el nodo $n + 1$ es descubierto por el DFS se calculan bien sus propiedades
+	\end{itemize}
+	Cuando el DFS descuebre el nodo $n + 1$ su padre $p$, donde $1 \leq p \leq n$, ya est\'a bien calculado por hip\'otesis. $n+1$ conoce si cambia al padre y si su padre cambia a la ra\'iz. Si $n+1$ es capaz de cambiar la salida de $p$ y $p$ cambia la ra\'iz, entonces $n+1$ tambi\'en cambia la ra\'iz. De lo contrario $n + 1$ no afecta la salida del circuito.
+	
+	\subsection{Pseudoc\'odigo}
+	\begin{algorithm}[H] 
+		\caption{DFS-Visit-OutPut(G, u)}
+		\begin{algorithmic}[1]
+			\ForEach{$ u \in Adj[u]$}:
+			\If{$u$ not visited}
+			\State DFS-Visit-OutPut(G, u)
+			\State u.output = OutPut(u.right-son, u.left-son) \Comment{Halla el valor de la salida de u}
+			\EndIf
+			\EndFor
+			
+			\State \bf{return}
+			
+		\end{algorithmic}
+	\end{algorithm}
+	
+	\begin{algorithm}[H] 
+		\caption{DFS-Visit-Set-Prop(G, v, i-change-parent)}
+		\begin{algorithmic}[1]
+			\If {i-change-parent \bf{and} \textnormal{v.parent.changes-root}}
+				\State \textnormal{v.changes-root = \bf{True}}
+			\EndIf	
+			\ForEach{$ u \in Adj[v]$}:
+			\If{$u$ not visited}		
+			\State \textnormal{child-changes-me = v.Child-Changes-Me(u)}
+			\State \textnormal{DFS-Visit-Set-Prop(G, u, child-changes-me)}
+			\EndIf
+			\EndFor
+			
+			\State \bf{return} 
+			
+		\end{algorithmic}
+	\end{algorithm}
+	En el caso de la ra\'iz la propiedad \emph{changes-root} debe ser igualada a \emph{True} antes de llamar al m\'etodo \emph{DFS-Visit-Set-Prop}
+
+	\subsection{Análisis de la complejidad temporal}
+	La soluci\'on ejecuta dos DFS, los cuales tienen una complejidad temporal de $O(V + E)$. Sin embargo, en este caso se hace DFS sobre un \'arbol y todo \'arbol cumple que tiene exactamente $V - 1$ aristas, siendo $V$ la cantidad de v\'ertices en el \'arbol. Por lo tanto la complejidad temporal ser\'ia $O(V + (V - 1)) = O(2*V - 1) = O(V)$
 \end{document}
