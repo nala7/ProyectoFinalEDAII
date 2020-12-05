@@ -53,9 +53,74 @@
 	\end{titlepage}
 
 	\section{Problema 1}
-	Sea una red de flujo $G = <V,E,c>$, con fuente y receptor $s,t \in V$ respectivamente y para toda arista $e \in E$ se cumple que $c(e) = 1$. Se desea eliminar $k$ aristas de la red de flujo de tal forma que el valor del flujo máximo disminuya lo m\'as posible.
-	Dise\~ne un algoritmo que encuentre un conjunto $F$ de $k$ aristas $(|F| = k)$ de 	
-	tal forma que el valor del flujo máximo en la red de flujo $G' = <V,E - F,c>$ es lo m\'as peque\~no posible. La complejidad temporal de su algoritmo debe ser de $O(|E|*k)$. 
+ 	 Sea una red de flujo $G = <V,E,c>$, con fuente y receptor $s,t \in V$ respectivamente y para toda arista $e \in E$ se cumple que $c(e) = 1$. Se desea eliminar $k$ aristas de la red de flujo de tal forma que el valor del flujo m\'aximo disminuya lo m\'as posible. Dise\~ne un algoritmo que encuentre un conjunto $F$ de $k$ aristas $(|F| = k)$ de tal forma que el valor del flujo m\'aximo en la red de flujo $G' = <V,E - F,c>$ es lo m\'as peque\~no posible. La complejidad temporal de su algoritmo debe ser de $O(|E|*|f^*|)$. 	
+	\subsection{Propuesta de Soluci\'on}
+	 Para seleccionar las $k$ aristas de la red de flujo de forma que el valor del flujo m\'aximo disminuya lo m\'as posible, primero se deben escoger las aristas que cruzan el corte m\'inimo de la red de flujo. Si $k$ es mayor que la cantidad de aristas que cruzan el corte m\'inimo entonces se selecciona cualquiera de las restantes de la red de flujo hasta completar la cantidad $k$ de aristas.
+	\subsection{Correctitud}
+	El valor del flujo m\'aximo es igual a la capacidad del corte m\'inimo de la red de flujo (visto en conferencia).
+	\\Como $c(e)=1$ $\forall e \in G(E)$ podemos establecer una biyecci\'on entre la capacidad y la cantidad de aristas que cruzan un corte.  
+	\\Para obtener un flujo m\'aximo sobre la red de flujo $G$ se utiliza el algoritmo {\bf Ford-Furlkerson(G)}. El algoritmo genera una red residual $G_f$ de $G$.
+	\\La soluci\'on consiste en realizar un $DFS$-$Visit$ a partir de $s$ en  $G_f$. Todos los v\'ertices alcanzados por $s$, incluyendo s conformar\'an una parte del corte y los no alcanzables junto a $t$ la otra parte del corte.
+	\\El corte sobre la red de flujo $G$ con flujo m\'aximo $f^*$ es de capacidad m\'inima.
+	\textbf{Demostraci\'on:}
+	\begin{itemize} 
+		\item[]  Sea el corte $(S,T)$ formado por $S = \{s,v_1,v_2,...,v_k\} $ y $T = \{v_{k+1},v_{k+2},...,v_{n-2},t\} $ donde todo v\'ertice $v_i \in S$ es alcanzable por $s$ a trav\'es de un camino en la red residual $G_f$ y todo v\'ertice en $T$ ser\'ian los no alcanzables por $s$ bajo este criterio. Ambos conjuntos son no vac\'ios, pues a $S$ al menos pertenece el v\'ertice $s$ y a $T$ pertenece el v\'ertice $t$, pues si no perteneciera significa que existe un camino de $s$ hacia $t$ en $G_f$ lo que implica que ser\'ia un camino aumentativo y ser\'ia posible incrementar el flujo utilizando dicho camino lo cual entra en contradicci\'on con el hecho de que $f^*$ es un flujo m\'aximo en $G$.
+		
+		Luego, toda arista $< u,v >$ que cruza el corte $(S,T)$ de $S$ hacia $T$, donde $u \in S$ y $v \in T$ cumple que $f(< u,v >) = c(< u,v >)$, pues si existiese $< u,v >$ que cruza el corte tal que $f(< u,v >) < c(< u,v >)$ entonces la arista $< u,v >$ no estar\'ia saturada y existiera en $G_f$ por lo que el camino de $s$ hacia $u$ de aristas no saturadas, adicionando la arista $< u,v >$ forman un camino $s$ hacia $v$ en $G_f$ lo cual es una contradicci\'on pues $v \in T$. 
+		
+		Adem\'as toda arista $< v,u >$ que cruza el corte desde $T$ hacia $S$ donde $u \in S$ y $v \in T$ cumple que $f(< u,v >) = 0$, pues si existiese $< v,u >$ que cruza el corte tal que $f(< v,u >) > 0$ entonces dicha arista da origen a una arista inversa $< u,v >$ en $G_f$, como $u \in S$, entonces existe un camino desde $s$ hacia $u$ en $G_f$ que al unirse con la arista $< u,v >$ dar\'ia lugar a un camino de $s$ hacia $v$ en $G_f$ lo cual es una contradicci\'on con el hecho de que $v \in T$.
+		
+		Por lo tanto todas las aristas que salen de $S$ est\'an saturadas y todas las que entran tienen flujo 0. Demostremos entonces que la capacidad del corte $(S,T)$ es igual al valor del flujo m\'aximo $f^*$ en $G$. Sabemos que $|f^*| = f(S,T)$ por el $Lema$ 26.4 visto en conferencia. Luego: 
+		
+		$|f^*| = f(S,T) = \sum\limits_{u\in S}\sum\limits_{v\in T}f(u,v)-\sum\limits_{u\in S}\sum\limits_{v\in T}f(v,u)$ 
+		
+		Pero como demostramos anteriormente que $f(u,v)=c(u,v)$ y $f(v,u)=0$ donde $u \in S$ y $v \in T$ entonces:
+		
+		$|f^*| = f(S,T) = \sum\limits_{u\in S}\sum\limits_{v\in T}c(u,v)-\sum\limits_{u\in S}\sum\limits_{v\in T}0 = \sum\limits_{u\in S}\sum\limits_{v\in T}c(u,v) = C(S,T)$
+		
+		Luego la capacidad del corte $(S,T)$ es igual al valor del flujo m\'aximo $f^*$ en $G$ por lo que su capacidad es m\'inima ya que $|f^*|$ es una cota m\'inima de la capacidad de todo corte por $Corolario$ 26.5 visto en conferencia.  
+	\end{itemize}   
+	
+	Sea $C$ el conjunto de aristas que cruzan el corte m\'inimo encontrado en el $DFS$-$Visit$. Si $k \leq |C|$, se a\~naden al conjunto $F$ $k$ aristas de $C$. Si $k > |C| $ se a\~nade a $F$ todas las aristas de $C$ y se completa con $k - |C|$ aristas restantes de $G$.
+	
+	Si se quitan de una red de flujo todas las aristas de un corte m\'inimo, el flujo m\'aximo es igual a cero, $s$ y $t$ quedan desconectados por lo que no pasa ning\'un flujo hacia $t$. Por tanto quitar otras aristas de la red residual no cambia el valor del flujo m\'aximo.
+	
+	\subsection{Pseudoc\'odigo}  
+	\begin{algorithm}[H] 
+		\caption{ }            
+		\begin{algorithmic}[1]
+			\label{ConjuntoF}
+			\State $G_f \gets$ {\bf Ford-Furlkerson(G,s,t)}  \Comment $G_f$ es el grafo residual  
+			
+			\State visited $\gets$ {\bf DFS-Visit($G_f$,s)}
+			
+			\State Min-Cut $\gets$ list     
+			
+			\ForEach {$<a,b>$ in $G.Edges$}
+			\If { visited[$a$] {\bf and} {\bf not} visited[$b$]}
+			\State Min-Cut.add(<a,b>)  
+			\State <a,b>.Added = True
+			\EndIf
+			\EndFor
+			
+			\State F $\gets$ list    
+			
+			\While {F.Count $< k$ {\bf and} Min-Cut.Count $\neq$ 0}
+			\State F.add(Min-Cut.Pop())    
+			\EndWhile
+			
+			\While { F.Count $< k$}
+			\State edge = $G.Edges$.Pop()
+			\If {{\bf not} edge.Added}
+			\State F.Add(edge)
+			\EndIf
+			\EndWhile
+			
+			\State {\bf return} F       
+		\end{algorithmic}
+	\end{algorithm} 
+	\subsection{Análisis de la complejidad temporal} 
+	La complejidad temporal del algoritmo {\bf Ford-Furlkerson} es $O(|E|*|f^*|)$. La ejecuci\'on del {\bf DFS-Visit} sobre una red de flujo es $O(|E|)$(demostrado en conferencia). Luego, se ejecutan tres ciclos independientes que recorren las aristas del grafo una \'unica vez, por lo tanto cada uno es $O(|E|)$. Por regla de la suma, la complejidad temporal del algoritmo es $O(|E|*|f^*|)$.
 	\section{Problema 2}
 	Sean $n$ ciudades, una de ellas la capital y $m$ carreteras. Cada carretera conecta unidireccionalmente a un par de ciudades. Dise\~ne un algoritmo que devuelva una lista de carreteras a construir tal que luego de construidas sea posible llegar desde la capital al resto de las ciudades El tama\~no de la lista tiene que ser lo menor posible incluso vac\'ia en caso de que inicialmente todas las ciudades sean alcanzables desde la capital. La complejidad temporal del algoritmo debe ser $O(n + m)$.
 	\subsection{Propuesta de Soluci\'on}
